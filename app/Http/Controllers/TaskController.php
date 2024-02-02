@@ -54,32 +54,46 @@ class TaskController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Task $task)
+    public function show(string $id)
     {
-        //
+        $task = Task::find($id);
+        return view('task.show', compact('task'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Task $task)
+    public function edit(string $id)
     {
-        //
+        $user = Auth::user();
+        $task = Task::find($id);
+        $formattedEndDate = Carbon::createFromFormat('Y-m-d', $task->end_date)->format('m/d/Y');
+        $task->end_date = $formattedEndDate;
+        $categories = $user->categories()->get();
+        return view('task.update', compact('task', 'categories'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Task $task)
+    public function update(RequestsTask $request, string $id)
     {
-        //
+        $formattedEndDate = Carbon::createFromFormat('m/d/Y', $request->input('end_date'))->format('Y-m-d');
+        Task::find($id)->update([
+            "name" => $request->input('name'),
+            "description" => $request->input('description'),
+            "end_date" => $formattedEndDate,
+            'category_id' => $request->input('category'),
+        ]);
+        return redirect()->route('task.all')->with('success', 'Tâche modifié avec succès');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Task $task)
+    public function destroy(string $id)
     {
-        //
+        Task::destroy($id);
+        return redirect()->route('task.all')->with('success', 'Supprimé');
     }
 }

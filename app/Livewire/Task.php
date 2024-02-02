@@ -12,7 +12,6 @@ class Task extends Component
 
     public function mount()
     {
-        // Initialiser la liste des tâches (vous devrez adapter cela à votre logique)
         $user = Auth::user();
         $this->tasks = $user->tasks()->get();
     }
@@ -22,8 +21,6 @@ class Task extends Component
         $task = ModelsTask::find($taskId);
         $task->status = $status;
         $task->save();
-
-        // Mettre à jour la liste des tâches après le déplacement
         $user = Auth::user();
         $this->tasks = $user->tasks()->get();
     }

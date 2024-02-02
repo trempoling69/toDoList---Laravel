@@ -54,6 +54,7 @@
             e.dataTransfer.dropEffect = "move";
         })
         progressColumn.addEventListener('drop', e => {
+            e.preventDefault()
             let draggingEl = dragRoot.querySelector('[dragging]')
             let idOfTask = draggingEl.getAttribute('drag-item')
             progressColumn.appendChild(draggingEl)
@@ -68,6 +69,7 @@
             e.dataTransfer.dropEffect = "move";
         })
         todoColumn.addEventListener('drop', e => {
+            e.preventDefault()
             let draggingEl = dragRoot.querySelector('[dragging]')
             let idOfTask = draggingEl.getAttribute('drag-item')
             todoColumn.appendChild(draggingEl)
@@ -82,6 +84,7 @@
             e.dataTransfer.dropEffect = "move";
         })
         doneColumn.addEventListener('drop', e => {
+            e.preventDefault()
             let draggingEl = dragRoot.querySelector('[dragging]')
             let idOfTask = draggingEl.getAttribute('drag-item')
             doneColumn.appendChild(draggingEl)

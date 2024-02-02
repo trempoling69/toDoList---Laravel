@@ -5,7 +5,7 @@
 @section('content')
 <div class="container mx-auto my-8 space-y-10">
     <h1 class="dark:text-white text-3xl">Toutes vos catégories</h1>
-    <button data-modal-target="create-category-modal" data-modal-toggle="create-category-modal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+    <button create-category data-modal-target="create-category-modal" data-modal-toggle="create-category-modal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
         Créer une catégorie
         <svg class="w-4 h-4 ml-2" fill="currentColor" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 309.059 309.059" xml:space="preserve">
             <g>
@@ -18,12 +18,14 @@
     @if(!$categories->isEmpty())
     <div class="flex flex-wrap gap-10">
         @foreach($categories as $category)
-            <div class="h-16 w-72 bg-gray-200 dark:bg-gray-500 flex items-center gap-5 rounded hover:cursor-pointer" data-modal-target="update-category-modal" data-modal-toggle="update-category-modal">
+        <div class="relative">
+            <div update-category={{$category->id}} class="relative h-16 w-72 bg-gray-200 dark:bg-gray-500 flex items-center gap-5 rounded hover:cursor-pointer" data-modal-target="create-category-modal" data-modal-toggle="create-category-modal">
                 <div class="{{$category->color}} w-4 h-full rounded-l"></div>
-                <span class="font-bold text-lg">{{$category->name}}</span>
+                <span class="font-bold text-lg dark:text-white">{{$category->name}}</span>
             </div>
+            @include('category.dropdown', ['id'=>$category->id])
+        </div>
         @endforeach
-            @include('category.update', ['categoryToUpdate'=>$category])
     </div>
         @else
         <h1 class="text-center font-bold text-3xl my-10 text-gray-800 dark:text-white font-mono">Votre liste de catégories est bien vide...</h1>
@@ -42,6 +44,24 @@
             </div>
         </div>
 @endif
-@include('category.create')
+
+@include('category.modal')
 </div>
+
+<script>
+    let updateCategoryEl = document.querySelectorAll('[update-category]');
+    let createCategoryEl = document.querySelector('[create-category]')
+   createCategoryEl.addEventListener('click', e => {
+        let component = Livewire.find(document.querySelector('[wire\\:id]').getAttribute('wire:id'));
+        component.call('openModal', null)
+   })
+    updateCategoryEl.forEach((el)=>{
+        el.addEventListener('click', e=>{
+            let categoryId = e.target.getAttribute('update-category');
+            let component = Livewire.find(document.querySelector('[wire\\:id]').getAttribute('wire:id'));
+            console.log(categoryId);
+            component.call('openModal', categoryId)
+        })
+    })
+</script>
 @endsection

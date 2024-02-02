@@ -32,16 +32,13 @@ Route::controller(TaskController::class)->middleware('auth')->group(function () 
     Route::get('/createTask', 'create')->name('task.create');
     Route::post('/createTask', 'store');
     Route::get('/task/{id}', 'show')->name('task.show');
-    Route::get('task/{id}/edit', 'edit')->name('task.edit');
-    Route::put('task/{id}/edit', 'update');
-    Route::delete('task/{id}', 'destroy');
+    Route::get('/task/{id}/edit', 'edit')->name('task.edit');
+    Route::put('/task/{id}/edit', 'update');
+    Route::delete('task/{id}', 'destroy')->name('task.destroy');
 });
 Route::controller(CategoryController::class)->middleware('auth')->group(function () {
     Route::get('/category', 'index')->name('category.all');
-    // Route::get('/createTask', 'create')->name('task.create');
     Route::post('/createCategory', 'store')->name('category.create');
-    // Route::get('/task/{id}', 'show')->name('task.show');
-    // Route::get('task/{id}/edit', 'edit')->name('task.edit');
-    Route::put('task/{id}/edit', 'update')->name('category.update');
-    // Route::delete('task/{id}', 'destroy');
+    Route::put('category/{id}/edit', 'update')->name('category.update');
+    Route::delete('category/{id}', 'destroy')->name('category.destroy');
 });

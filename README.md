@@ -1,66 +1,44 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## Spec technique du projet 
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+- Laravel
+- Livewire 
+- Tailwind CSS
+- Flowbite
 
-## About Laravel
+## Spec fonctionnelle du projet 
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Création de tache 
+- Création de catégorie
+- Assigner une catégorie au tâche
+- Gestion compte utilisateur
+- Suppression des taches
+- Suppression des catégories qui supprime les taches assignées à celle-ci
+- Gestion de status des taches
+- Drag and drop
+- Dark mode and light mode
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Pour lancer le projet 
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Créer la DB : 
+```bash
+php artisan migrate
+```
 
-## Learning Laravel
+Lancer le serveur Laravel : 
+```bash
+php artisan serve
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Lancer Vite pour le style : 
+```bash
+npm run dev
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Problème du projet
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Il y a un problème d'event sur la page de des taches, si l'on bouge une tache de colonne avec le drag and drop ou alors les boutons, l'event lorsque l'on appuie sur les trois petits points ne fonctionne plus, il faut alors refresh la page. 
+N'ayant jamais utilisé ni *__Blade__* ni *__Livewire__* ni les drag and drop je ne sais pas du tout d'où vient le problème et je n'ai pas réussi à la résoudre
+J'ai l'impression que lorsque *__Livewire__* fait un re-render du component, tous les eventListener sont supprimés et ils ne sont pas remis par la suite. 
+Sachant que je n'ai pas facilité les choses à utiliser les scripts de *__Flowbite__* pour développé l'interface plus rapidement, il doit y avoir des conflits entre tout.
 
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+J'ai aussi repéré des potentiels problème et lenteur au niveau de la modal des catégories. J'ai voulu utiliser la même modal avec le même form pour créer et modifier les catégories. J'ai décidié d'utiliser *__Livewire__* pour gérer l'état de ce form, il y a un petit temps de réactions et j'ai repéré une ou deux fois un fail mais sans context particulier. 

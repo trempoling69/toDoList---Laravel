@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Category as RequestsCategory;
 use App\Models\Category;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
@@ -57,18 +56,16 @@ class CategoryController extends Controller
      */
     public function update(RequestsCategory $request, string $id)
     {
-        // dd($category);
-        // dd($request);
         Category::find($id)->update($request->validated());
-        return redirect()->route('category.all')->with('success', 'Tâche modifié avec succès');
-        //
+        return redirect()->route('category.all')->with('success', 'Catégorie modifié avec succès');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function destroy(string $id)
     {
-        //
+        Category::destroy($id);
+        return redirect()->route('category.all')->with('success', 'Supprimé');
     }
 }
