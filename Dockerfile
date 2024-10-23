@@ -56,5 +56,5 @@ RUN apt-get -y autoremove \
 
 USER ${WWW_USER}
 
-CMD ["bash", "-c", "php artisan key:generate && php artisan migrate && apache2-foreground"]
+CMD ["bash", "-c", "php artisan migrate && php artisan key:generate && apache2-foreground"]
 
