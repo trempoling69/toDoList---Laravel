@@ -54,11 +54,7 @@ RUN apt-get -y autoremove \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 
-# RUN artisan migrate
-
-RUN php artisan key:generate
-
 USER ${WWW_USER}
 
-CMD [ "php artisan migrate;apache2-foreground" ]
+CMD [ "php artisan key:generate;php artisan migrate;apache2-foreground" ]
 
