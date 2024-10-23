@@ -1,3 +1,15 @@
+FROM node:18 AS builder
+
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN npm install
+
+COPY . .
+
+RUN npm run build
+
 FROM php:8.3-apache
 
 ARG WWW_USER=1000
@@ -41,4 +53,12 @@ RUN apt-get -y autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+
+RUN php artisan migrate
+
+RUN php artisan key:generate
+
 USER ${WWW_USER}
+
+CMD [ "apache2-foreground" ]
+
