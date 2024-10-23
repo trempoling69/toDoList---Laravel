@@ -1,15 +1,3 @@
-FROM node:18 AS builder
-
-WORKDIR /app
-
-COPY package*.json ./
-
-RUN npm install
-
-COPY . .
-
-RUN npm run build
-
 FROM php:8.3-apache
 
 ARG WWW_USER=1000
@@ -29,7 +17,9 @@ RUN apt-get update && apt-get install -y \
     libcurl4-openssl-dev \
     zip \
     unzip \
-    default-mysql-client
+    default-mysql-client \
+    nodejs \
+    npm
 
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd zip curl intl
@@ -48,6 +38,8 @@ COPY . /app
 
 RUN composer install --no-dev --optimize-autoloader
 RUN chown -R webapp:webapp /app
+
+RUN npm install && npm run build
 
 RUN apt-get -y autoremove \
     && apt-get clean \
