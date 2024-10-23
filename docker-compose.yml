@@ -25,6 +25,7 @@ services:
       - .:/app
     networks:
       - appNetwork
+    restart: always
     command: bash -c "composer install && php artisan migrate && php artisan key:generate && apache2-foreground"
     environment:
       - DB_HOST=db
