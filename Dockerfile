@@ -53,8 +53,9 @@ RUN apt-get -y autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+COPY .env.example /app/.env
 
 USER ${WWW_USER}
 
-CMD ["bash", "-c", "php artisan migrate && php artisan key:generate && apache2-foreground"]
+CMD ["bash", "-c", "php artisan migrate --force && php artisan key:generate && apache2-foreground"]
 
