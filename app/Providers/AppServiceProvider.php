@@ -22,6 +22,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        if (env( 'APP_ENV' ) !== 'local') {
+            $this->app['request']->server->set( 'HTTPS', true );
+        }
         View::composer('layout', function ($view) {
             $user = Auth::user();
             $totalTasks = Task::where('user_id', $user->id)->count();
